@@ -1,19 +1,37 @@
-from franka_web_API import franka_open_brakes, franka_execute_task
+from intent_generator import Intents
+from FrankaMax import FrankaMax
 from time import sleep
 
-# Example function calls
-HOSTNAME = '172.27.23.65'
-LOGIN = 'Panda'
-PASSWORD = 'panda1234'
 
-franka_open_brakes(HOSTNAME, LOGIN, PASSWORD)
-# franka_close_brakes(HOSTNAME, LOGIN, PASSWORD)
+def DEMO_show_possible_intents():
+    """Just a demo to showcase how to use intent generator.
+    """
+    IT = Intents()
+    # When used with no arguments -> will generate a BringPart intent with random object/color
+    print(IT.generate_BringPart())
+    # When used with arguments -> will check if the object/color combination is possible and generate BringPart intent.
+    print(IT.generate_BringPart(fetch_object='bottom_cover', color='blue'))
+    print(IT.generate_TaskCheck())
+    print(IT.generate_PauseTask())
+    print(IT.generate_ContinueTask())
+    print(IT.generate_ActionConfirmation())
+    print(IT.generate_Start())
+    print(IT.generate_Stop())
+    print(IT.generate_FullAssembly('blue'))
+    # Randomly select and generate an intent from the available options.
+    print(IT.generate_random_intent())
 
-task_name = '_move_home'
-franka_execute_task(HOSTNAME, LOGIN, PASSWORD, task_name)
+IT = Intents()
+Franka = FrankaMax()
 
-sleep(5)
+start = IT.generate_Start()
+Franka.DoAction(start)
 
-input('Type any char to executive "assembly_body 1": ')
-task_name = 'assembly_body'
-franka_execute_task(HOSTNAME, LOGIN, PASSWORD, task_name)
+full_assembly = IT.generate_FullAssembly(color='blue')
+Franka.DoAction(full_assembly)
+
+stop = IT.generate_Stop()
+Franka.DoAction(stop)
+print('Program has finished successfully.')
+
+# DEMO_show_possible_intents()

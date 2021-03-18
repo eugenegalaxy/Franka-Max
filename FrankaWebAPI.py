@@ -16,7 +16,7 @@ By using these you can:
 7. Reboot robot (takes ~100 seconds)
 8. Shutdown robot.
 
-Author: Jevgenijs Galaktionovs; jgalak16@student.aau.dk (active until June 2021); jga@reallyarobot.com (active always <3)
+Author: Jevgenijs Galaktionovs; jgalak16@student.aau.dk (active until June 2021); jga@reallyarobot.com
 """
 
 import json
@@ -26,9 +26,12 @@ import ssl
 from time import strftime, sleep
 from http.client import HTTPSConnection, HTTPException
 
+ENABLE_DEBUG_MESSAGES = True
 
 def log(message):
-    return print(strftime("%H:%M:%S")+"  "+message)
+    global ENABLE_DEBUG_MESSAGES
+    if ENABLE_DEBUG_MESSAGES is True:
+        return print(strftime("%H:%M:%S") + "  " + message)
 
 
 class FrankaWebInterface:
@@ -92,6 +95,12 @@ class FrankaWebInterface:
                                       'Cookie': 'authorization=%s' % self._token})
         return self._client.getresponse()
 
+    def stop_task(self):
+        self._client.request('DELETE', '/desk/api/execution',
+                             headers={'content-type': 'application/x-www-form-urlencoded',
+                                      'Cookie': 'authorization=%s' % self._token})
+        return self._client.getresponse()
+
     def pilot_mode(self, mode='one'):
         '''
            Can be 'one' or 'robot'.
@@ -132,7 +141,7 @@ def franka_open_brakes(hostname, login, password):
                 log('Brakes Unlocked')
             else:
                 log('ERROR Opening Brakes. Response status: {}'.format(response.status))
-            sleep(5)
+            # sleep(11)
         except HTTPException:
             log('ERROR Opening Brakes')
 
@@ -167,11 +176,22 @@ def franka_execute_task(hostname, login, password, TASK_NAME):
         try:
             response = api.execute_task(TASK_NAME)
             if response.status == 200:
-                log(" Task '{}' is executed successfully.".format(TASK_NAME))
+                log(" Task '{}' is started successfully.".format(TASK_NAME))
             else:
                 log("ERROR Executing Task '{0}'. Response status: {1}".format(TASK_NAME, response.status))
         except HTTPException:
             log("ERROR Executing Task '{0}'.".format(TASK_NAME))
+
+def franka_stop_task(hostname, login, password):
+    with FrankaWebInterface(hostname, login, password) as api:
+        try:
+            response = api.stop_task()
+            if response.status == 200:
+                log("Task is stopped successfully.")
+            else:
+                log("ERROR Stopping Task. Response status: {}".format(response.status))
+        except HTTPException:
+            log("ERROR Stopping Task.")
 
 
 def franka_pilot_mode(hostname, login, password, MODE):
