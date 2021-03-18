@@ -5,10 +5,12 @@ DONE | 3. In python, write a script that releases brakes, goes to home pos, star
 DONE | 4. Create all needed pick/place tasks (4-5 in total?)
 DONE | 5. In Python, add those 4-5 tasks and make a menu what to do 
 DONE | 6. Add various intentinputs from slides and randomize what is asked.
-7. Work on Return Status
+DONE | 7. Make a full sequence of assembly
+
 8. Research on stop/resume motions.
-DONE | 9. Make a full sequence of assembly
+9. Figure out how to get C++ function of StatusCheck into Python and use it. 
+    9.1 Imlement StatusCheck into every task to WAIT for previous task to finish before starting current one.
 10. Make a sequence where there is a break between each object-fetching (for questions/verbal explanations)
-
-
-find a way to read robot's status, need to know if its busy doing something or idle
+11. Make a sequence to assemble a case ONLY with a robot, no human hands.
+12. Document work/README
+13. More...
