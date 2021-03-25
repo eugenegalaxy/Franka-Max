@@ -27,8 +27,11 @@ Franka = FrankaMax()
 start = IT.generate_Start()
 Franka.DoAction(start)
 
-full_assembly = IT.generate_FullAssembly(color='blue')
-Franka.DoAction(full_assembly)
+# full_assembly = IT.generate_FullAssembly(color='blue')
+# Franka.DoAction(full_assembly)
+
+auto_assembly = IT.generate_AutoAssembly(color='blue')
+Franka.DoAction(auto_assembly)
 
 stop = IT.generate_Stop()
 Franka.DoAction(stop)

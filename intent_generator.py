@@ -8,7 +8,7 @@ class Intents(object):
     FETCH_OBJECTS = ['bottom_cover', 'pcb', 'fuse_one', 'fuse_two', 'top_cover']
     COLORS = ['blue', 'white', 'black']
     INTENTS = ['BringPart', 'TaskCheck', 'PauseTask', 'ContinueTask',
-               'ActionConfirmation', 'Stop', 'Start', 'FullAssembly', 'MoveHome']
+               'ActionConfirmation', 'Stop', 'Start', 'FullAssembly', 'MoveHome', 'AutoAssembly']
 
     def __init__(self):
         pass
@@ -72,6 +72,15 @@ class Intents(object):
         request = {'Intent': intent, 'Color': color}
         return request
 
+    def generate_AutoAssembly(self, color):
+        err_str3 = 'Argument {0} is not in the list of available objects. Choose one from: {1}'.format(
+            color, self.COLORS)
+        assert(color in self.COLORS), err_str3
+
+        intent = self.INTENTS[9]
+        request = {'Intent': intent, 'Color': color}
+        return request
+
     def generate_MoveHome(self):
         intent = self.INTENTS[8]
         request = {'Intent': intent}
@@ -96,5 +105,7 @@ class Intents(object):
             return self.generate_Start()
         elif selected_option == 7:
             return self.generate_FullAssembly('blue')
-        else:
+        elif selected_option == 8:
             return self.generate_MoveHome()
+        else:
+            return self.generate_AutoAssembly('blue')
