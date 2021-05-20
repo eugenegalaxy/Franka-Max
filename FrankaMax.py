@@ -14,6 +14,9 @@ class FrankaMax():
         self.PASSWORD = password
 
     def DoAction(self, intent):
+        with open('test.txt', 'w') as f:
+            f.write('Executing DoAction')
+
         err_str0 = 'Argument "intent" must be a dictionary, see class "Intents" in intent_genetator.py'
         assert(type(intent) is dict), err_str0
 
@@ -72,9 +75,7 @@ class FrankaMax():
         task_name = '_move_home'
         franka_execute_task(self.HOSTNAME, self.LOGIN, self.PASSWORD, task_name)
 
-    def auto_assemble_bottom_cover(self):
-        self.move_home()
-        sleep(5)
+    def auto_assemble_body(self):
         task_name = 'self_assembly_body'
         franka_execute_task(self.HOSTNAME, self.LOGIN, self.PASSWORD, task_name)
 
@@ -82,15 +83,36 @@ class FrankaMax():
         task_name = 'self_assembly_pcb'
         franka_execute_task(self.HOSTNAME, self.LOGIN, self.PASSWORD, task_name)
 
+    def auto_assemble_fuse_1(self):
+        task_name = 'self_assembly_fuse_1'
+        franka_execute_task(self.HOSTNAME, self.LOGIN, self.PASSWORD, task_name)
+
+    def auto_assemble_fuse_2(self):
+        task_name = 'self_assembly_fuse_2'
+        franka_execute_task(self.HOSTNAME, self.LOGIN, self.PASSWORD, task_name)
+
+    def auto_assemble_cover(self):
+        task_name = 'self_assembly_cover'
+        franka_execute_task(self.HOSTNAME, self.LOGIN, self.PASSWORD, task_name)
+
     # NOTE: this function is written only for 1 color objects. (blue)
     def auto_assembly(self, color):
         assert(color == 'blue'), 'TEST MODE: only "blue" color is available for now...'
         self.open_brakes()
+        self.move_home()
+        sleep(8)
         t1 = time()
-        self.auto_assemble_bottom_cover()
-        sleep(38)
+        self.auto_assemble_body()
+        sleep(30)
         self.auto_assemble_pcb()
-        sleep(23)
+        sleep(25)
+        self.auto_assemble_fuse_1()
+        sleep(26)
+        self.auto_assemble_fuse_2()
+        sleep(26)
+        self.auto_assemble_cover()
+        sleep(26)
+
 
     # NOTE: this function is written only for 1 color objects. (blue)
     def fetch_one_object(self, obj, color):

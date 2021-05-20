@@ -11,6 +11,5 @@ DONE | 7. Make a full sequence of assembly
 9. Figure out how to get C++ function of StatusCheck into Python and use it. 
     9.1 Imlement StatusCheck into every task to WAIT for previous task to finish before starting current one.
 10. Make a sequence where there is a break between each object-fetching (for questions/verbal explanations)
-11. Make a sequence to assemble a case ONLY with a robot, no human hands.
+DONE | 11. Make a sequence to assemble a case ONLY with a robot, no human hands.
 12. Document work/README
-13. More...
