@@ -51,19 +51,19 @@ Task required from Franka robot:
 Assist an operator by fetching him objects from the workspace
 
 Objects:
-Bottom cover
-PCB
-x2 Fuses
-Top cover
+Bottom cover,
+PCB,
+x2 Fuses,
+Top cover.
 
 Optional/next-step fetures: Colors of covers
-White
-Blue
-Black
+White,
+Blue,
+Black.
 
 Franka skills needed:
-Simple motions to a predifined various positions
-Force based grasps with varying force (very low force for fuses)
+Simple motions to a predifined various positions, 
+Force based grasps with varying force (very low force for fuses).
 
 
 In case if this README file is not sufficient or more questions arise, feel free to contact me at **jevgenygalaktionov@gmail.com**.
